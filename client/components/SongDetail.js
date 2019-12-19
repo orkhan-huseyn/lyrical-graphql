@@ -1,32 +1,33 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Link } from 'react-router';
+import LyricCreate from './LyricCreate';
+import fetchSongQuery from '../queries/fetchSong';
 
 class SongDetail extends React.Component {
   render() {
+    const { song, loading } = this.props.data;
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div>
         <Link to="/">Back</Link>
-        <h2>Song details</h2>
+        <h2>{song.title}</h2>
+        <ul className="collection">
+          {song.lyrics.map(lyric => (
+            <li key={lyric.id} className="collection-item">
+              {lyric.content}
+            </li>
+          ))}
+        </ul>
+        <LyricCreate songId={this.props.params.id} />
       </div>
     );
   }
 }
-
-const query = gql`
-  query getSongDetails($id: ID!) {
-    song(id: $id) {
-      id
-      title
-      lyrics {
-        id
-        likes
-        content
-      }
-    }
-  }
-`;
 
 const options = props => {
   return {
@@ -34,4 +35,4 @@ const options = props => {
   };
 };
 
-export default graphql(query, { options })(SongDetail);
+export default graphql(fetchSongQuery, { options })(SongDetail);
