@@ -1,17 +1,13 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import fetchSongQuery from '../queries/fetchSong';
 
 class LyricList extends React.Component {
   likeLyric(id) {
     this.props.mutate({
       variables: {
         id
-      },
-      refetchQueries: [
-        { query: fetchSongQuery, variables: { id: this.props.songId } }
-      ]
+      }
     });
   }
 
@@ -42,6 +38,8 @@ const mutation = gql`
   mutation likeLyric($id: ID!) {
     likeLyric(id: $id) {
       id
+      likes
+      content
     }
   }
 `;

@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import fetchSongQuery from '../queries/fetchSong';
 
 class LyricCreate extends React.Component {
   constructor(props) {
