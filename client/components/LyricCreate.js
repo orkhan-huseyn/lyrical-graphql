@@ -18,10 +18,7 @@ class LyricCreate extends React.Component {
         variables: {
           content: this.state.content,
           songId: this.props.songId
-        },
-        refetchQueries: [
-          { query: fetchSongQuery, variables: { id: this.props.songId } }
-        ]
+        }
       })
       .then(() => {
         this.setState({ content: '' });
@@ -51,6 +48,7 @@ const mutation = gql`
       title
       lyrics {
         id
+        likes
         content
       }
     }
